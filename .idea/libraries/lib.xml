@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="file://C:/Jenkins_slave/workspace/ruthna-12510-JOB/AdventNetTestSuite/TestBuild_124579/ManageEngine/DesktopCentral_Server/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://C:/Jenkins_slave/workspace/ruthna-12510-JOB/AdventNetTestSuite/TestBuild_124579/ManageEngine/DesktopCentral_Server/lib" />
+    </SOURCES>
+    <jarDirectory url="file://C:/Jenkins_slave/workspace/ruthna-12510-JOB/AdventNetTestSuite/TestBuild_124579/ManageEngine/DesktopCentral_Server/lib" recursive="false" />
+    <jarDirectory url="file://C:/Jenkins_slave/workspace/ruthna-12510-JOB/AdventNetTestSuite/TestBuild_124579/ManageEngine/DesktopCentral_Server/lib" recursive="false" type="SOURCES" />
+  </library>
+</component>

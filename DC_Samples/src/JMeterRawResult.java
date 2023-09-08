@@ -6,9 +6,9 @@ import java.io.FileNotFoundException;
 public class JMeterRawResult {
     public static void main(String args[]) throws XMLStreamException, FileNotFoundException {
 
-        String rawResultFilePath = "E:\\test\\JMeterResult\\Patch_APDRaw.xml";
-        String customizedResultFilePath = "E:\\test\\JMeterResult\\Patch_APD.xml";
-        String fileName = "Patch_APD.xml";
+        String rawResultFilePath = "E:\\test\\JMeterResult\\bsp_profile_JMeterRAW.xml";
+        String customizedResultFilePath = "E:\\test\\JMeterResult\\bsp_profile_JMeter.xml";
+        String fileName = "bsp_profile_JMeter.xml";
         SAXXMLParser.customizeXMLReport(rawResultFilePath, customizedResultFilePath, fileName);
 
     }

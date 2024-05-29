@@ -13,7 +13,7 @@ public class AESExample {
     private static SecretKeySpec secretKey;
     private static String secret = "EMS_Automation";
 
-    private static String originalText = "538e6c708d8c2c6a4d547ec496b6dd6b0b130a2c09";
+    private static String originalText = "T1wesrtF-6Dkhhybc1YU";
     public static void main(String[] args) {
         // Encryption
         String encryptedText = encrypt(originalText, secret);

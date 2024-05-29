@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jarCompare">
+    <CLASSES>
+      <root url="file://E:/Dependency_Jar/jarCompare" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://E:/Dependency_Jar/jarCompare" recursive="false" />
+  </library>
+</component>

@@ -7,7 +7,9 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="rest-assured-4.4.0" level="project" />
+    <orderEntry type="library" name="opencsv" level="project" />
+    <orderEntry type="library" name="ant-junit" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

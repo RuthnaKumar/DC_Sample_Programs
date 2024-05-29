@@ -1,4 +1,3 @@
-import com.me.devicemanagement.onpremise.tools.dbmigration.utils.DBMigrationUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

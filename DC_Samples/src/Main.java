@@ -1,13 +1,25 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public class Main {
-    public static void main(String[] args) {
+import com.me.test.test_framework.properties.OnPremisesPath;
+import org.json.JSONObject;
 
-        String installStatus = "Installation completed successfully.";
-        if (installStatus.contains(installStatus) || (installStatus.contains("Installation") && installStatus.contains("successfully"))) {
-            System.out.println("successfully");
-        } else {
-            System.out.println("un successfully");
-        }
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class Main {
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
+    public static void main(String[] args) throws IOException {
+        String temp = "-----BEGIN CERTIFICATE-----\u2028MIIFdjCCBF6gAwIBAgIIA93nLS/kQigwDQYJKoZIhvcNAQELBQAwgYwxQDA+BgNV\u2028BAMMN0FwcGxlIEFwcGxpY2F0aW9uIEludGVncmF0aW9uIDIgQ2VydGlmaWNhdGlv\u2028biBBdXRob3JpdHkxJjAkBgNVBAsMHUFwcGxlIENlcnRpZmljYXRpb24gQXV0aG9y\u2028aXR5MRMwEQYDVQQKDApBcHBsZSBJbmMuMQswCQYDVQQGEwJVUzAeFw0yNDA1MDgx\u2028MDQ1MzlaFw0yNTA1MDgxMDQ1MzhaMIGPMUwwSgYKCZImiZPyLGQBAQw8Y29tLmFw\u2028cGxlLm1nbXQuRXh0ZXJuYWwuYjQzODAxNzgtNzFiMC00NmM0LWJjZjEtNzczNDUy\u2028OGE3Yjk0MTIwMAYDVQQDDClBUFNQOmI0MzgwMTc4LTcxYjAtNDZjNC1iY2YxLTc3\u2028MzQ1MjhhN2I5NDELMAkGA1UEBhMCVVMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw\u2028ggEKAoIBAQC/1UyH25GcUqGZh+M+xOhnjKFbP/gPJ0gjGHrmKQuMFyAoX3TEmCnJ\u2028LpSvU/InYyU/Q42ORuuMYnn0JsDSE+4kPzsnq9eF1KSuenC1rZuIMipO+EJ9DcSH\u2028evRKqV4neNw/xg8153BuHXDh+fCzW17jEDXG1J01qLv2s0ywziA9fdav3Hu4QaCu\u2028+IsI6bzMEy0tR5ne3KJYCqVVxK+91s7jNPxjAPxu7G4w1JnqN0Kh3i4ziKgN85Yb\u2028ydLffpGISTv+v7BYSlQ1IG8mTX9jo0sNV0144yVI2NhAZOBCf9Jb8flj/SRSrN2I\u2028pkMB8eWoVbijcGoJ0RqQuIPYO4EXAHs1AgMBAAGjggHVMIIB0TAJBgNVHRMEAjAA\u2028MB8GA1UdIwQYMBaAFPe+fCFgkds9G3vYOjKBad+ebH+bMIIBHAYDVR0gBIIBEzCC\u2028AQ8wggELBgkqhkiG92NkBQEwgf0wgcMGCCsGAQUFBwICMIG2DIGzUmVsaWFuY2Ug\u2028b24gdGhpcyBjZXJ0aWZpY2F0ZSBieSBhbnkgcGFydHkgYXNzdW1lcyBhY2NlcHRh\u2028bmNlIG9mIHRoZSB0aGVuIGFwcGxpY2FibGUgc3RhbmRhcmQgdGVybXMgYW5kIGNv\u2028bmRpdGlvbnMgb2YgdXNlLCBjZXJ0aWZpY2F0ZSBwb2xpY3kgYW5kIGNlcnRpZmlj\u2028YXRpb24gcHJhY3RpY2Ugc3RhdGVtZW50cy4wNQYIKwYBBQUHAgEWKWh0dHA6Ly93\u2028d3cuYXBwbGUuY29tL2NlcnRpZmljYXRlYXV0aG9yaXR5MBMGA1UdJQQMMAoGCCsG\u2028AQUFBwMCMDAGA1UdHwQpMCcwJaAjoCGGH2h0dHA6Ly9jcmwuYXBwbGUuY29tL2Fh\u2028aTJjYS5jcmwwHQYDVR0OBBYEFOlpGZ3yhbLKWlgP7XUxUqRgU520MAsGA1UdDwQE\u2028AwIHgDAQBgoqhkiG92NkBgMCBAIFADANBgkqhkiG9w0BAQsFAAOCAQEAaTf+FhSr\u2028wNcglCpPEWiztahCkguxiv6VRrP8gEw6abSNo12PEHE89JJNMEregwwqWngPvaK4\u2028IKH2G+F0sfo6FGTw41kHT59Qm9o88+EiZL+hrmWeyiMF/4lTIN8tEsUomJNUIAJO\u2028ecZgX56278wNBGJJ1PWXIz5elQyst5j1P58RQUwpUd2IaieL12imhcScxoE3x/P7\u2028eHEChue5fQzhqKWDTwuiT0RvpqgQsijHq4AuXNEqQPxrQpDSZgNw1FgZC6gntIke\u2028cZMO4pEfP6UW1mk0skdSY2bjrZ1qmo7/QsaovXpzDy+nuPwtx60rHLHLK3dicpfn\u2028sBuX2OiwDvK3bA==\u2028-----END CERTIFICATE-----";
+        System.out.println(temp);
     }
-}
+
+ }

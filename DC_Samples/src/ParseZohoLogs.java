@@ -14,25 +14,40 @@ import java.nio.charset.StandardCharsets;
 
 public class ParseZohoLogs {
 
-    private static final String ACCESS_TOKEN = "Zoho-oauthtoken 1000.ffe5ec2720d4fc8b5ad44692e5e18eda.f69745c43f1da03e6b022161ad6a8434";
+    private static final String ACCESS_TOKEN = "Zoho-oauthtoken 1000.06bacca36bc4afdafda14c180b6d0df5.3a801e6215f166973d6332af1eef4289";
     private static final String BASE_URL = "https://logs.localzoho.com/search";
     private static final String APP_ID = "10772528";
     private static final String SERVICE = "ECReleaseMgm";
     private static final String RANGE = "1-500000";
-    private static final String CSV_FILE_PATH = "E:\\Zoho Logs\\ApplicationLogQueryDetails.csv";
+    private static final String CSV_FILE_PATH = "E:\\Zoho Logs\\";
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String fromDateTime = "24/05/2024 12:40:00";
-        String toDateTime = "24/05/2024 12:45:00";
-        String applicationLogQuery = "logtype=\"application\" and message contains \"SelectQuery\" or message contains \"WritableDataObject\" or message contains \"exception\" or _zl_size >= \"30000\"";
-        String getApplicationLogAPI = buildLogAPIUrl(applicationLogQuery, fromDateTime, toDateTime);
+        String fromDateTime = "30/05/2024 18:50:00";
+        String toDateTime = "30/05/2024 18:55:00";
+//        String applicationLogQuery = "logtype=\"application\" and message contains \"SelectQuery\" or message contains \"WritableDataObject\" or message contains \"exception\" or _zl_size >= \"30000\"";
+//        String getApplicationLogAPI = buildLogAPIUrl(applicationLogQuery, fromDateTime, toDateTime);
 
-        fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime);
+//        fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime);
+        String applicationLogQuery;
+        String getApplicationLogAPI;
+        int loopCount = 2;
+        int i;
+        for(i = 0; i<loopCount; i++){
+            if(i==0){
+                applicationLogQuery = "logtype=\"application\" and message contains \"SelectQuery\" or message contains \"WritableDataObject\" or message contains \"exception\" or _zl_size >= \"30000\"";
+                getApplicationLogAPI = buildLogAPIUrl(applicationLogQuery, fromDateTime, toDateTime);
+                fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime, "ApplicationLogQueryDetails.csv");
+            } if(i==1){
+                applicationLogQuery = "logtype=\"application\" and message contains \"iscsignature\" or message contains \"longitude\" or message contains \"enroll?encapiKey=\" or message contains \"authkey=\"";
+                getApplicationLogAPI = buildLogAPIUrl(applicationLogQuery, fromDateTime, toDateTime);
+                fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime, "ApplicationSensitiveLogs.csv");
+            }
+        }
     }
 
     private static String fetchJsonFromApi(String apiUrl) throws IOException, InterruptedException {
         if(apiUrl.contains("thread_id")){
-            Thread.sleep(750);
+            Thread.sleep(1000);
         }
         HttpURLConnection connection = null;
         try {
@@ -63,8 +78,8 @@ public class ParseZohoLogs {
         }
     }
 
-    private static void fetchAndWriteApplicationLogs(String applicationLogAPI, String fromDateTime, String toDateTime) {
-        try (CSVWriter csvWriter = new CSVWriter(new FileWriter(CSV_FILE_PATH))) {
+    private static void fetchAndWriteApplicationLogs(String applicationLogAPI, String fromDateTime, String toDateTime, String fileName) {
+        try (CSVWriter csvWriter = new CSVWriter(new FileWriter(CSV_FILE_PATH+fileName))) {
             String jsonResponse = fetchJsonFromApi(applicationLogAPI);
             JsonNode rootNode = new ObjectMapper().readTree(jsonResponse);
             JsonNode docsNode = rootNode.path("docs");

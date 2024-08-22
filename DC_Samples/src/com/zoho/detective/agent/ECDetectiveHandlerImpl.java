@@ -1,5 +1,3 @@
-
-
 package com.zoho.detective.agent;
 
 import com.adventnet.ds.query.Column;

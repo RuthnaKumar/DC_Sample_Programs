@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="githubJavaParser">
+    <CLASSES>
+      <root url="file://E:/Dependency_Jar/githubJavaParser" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://E:/Dependency_Jar/githubJavaParser" recursive="false" />
+  </library>
+</component>

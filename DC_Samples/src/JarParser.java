@@ -8,7 +8,7 @@ import com.opencsv.CSVWriter;
 
 public class JarParser {
 
-    static String basePath = "E:\\DependencyFinder\\DC_DF_Data\\DESKTOPCENTRAL_11_3_2414_1\\";
+    static String basePath = "E:\\DependencyFinder\\DC_DF_Data\\EC_113242001\\";
 
     public static void main(String[] args) {
         String[] jarFileNames = {
@@ -41,41 +41,40 @@ public class JarParser {
                 JarEntry entry = entries.nextElement();
                 if (entry.getName().endsWith(".class")) {
                     String className = entry.getName().replace("/", ".").replace(".class", "");
-                    if (true) {
-                        try {
-                            // Load the class using URLClassLoader
-                            Class<?> clazz = dependencyClassLoader.loadClass(className);
+                    try {
+                        System.out.println("Loading class: " + className);
+                        // Load the class using URLClassLoader
+                        Class<?> clazz = dependencyClassLoader.loadClass(className);
 
-                            // Get all methods of the class
-                            Method[] methods = clazz.getDeclaredMethods();
+                        // Get all methods of the class
+                        Method[] methods = clazz.getDeclaredMethods();
 
-                            // Count lines of code for the class
-                            int classLines = getClassLines(clazz);
+                        // Count lines of code for the class
+                        int classLines = getClassLines(clazz);
 
-                            // Open the CSV file for writing
-                            try (CSVWriter writer = new CSVWriter(new FileWriter(basePath + File.separator + "output.csv", true))) {
-                                // Write the header if the file is empty
-                                if (jarFile.length() == 0) {
-                                    writer.writeNext(new String[]{"JARNAME", "CLASSNAME", "METHODNAME", "CLASSLINE"});
-                                }
-                                // Write the class name, method names, and line counts to the CSV file
-                                for (Method method : methods) {
-                                    writer.writeNext(new String[]{jarFile.getName(), className, method.getName(), String.valueOf(classLines)});
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                        // Open the CSV file for writing
+                        try (CSVWriter writer = new CSVWriter(new FileWriter(basePath + File.separator + "Adv_Class_Method.csv", true))) {
+                            // Write the header if the file is empty
+                            if (new File(basePath + File.separator + "Adv_Class_Method.csv").length() == 0) {
+                                writer.writeNext(new String[]{"JARNAME", "CLASSNAME", "METHODNAME", "CLASSLINE"});
                             }
-                        } catch (ClassNotFoundException e) {
-                            handleClassNotFound(jarFile, className);
-                        } catch (NoClassDefFoundError e) {
-                            handleMethodNotFound(jarFile, className);
-                        } catch (IllegalAccessError e) {
-                            handleMethodNotFound(jarFile, className);
-                        } catch (IncompatibleClassChangeError e) {
-                            handleIncompatibleClassChange(jarFile, className);
-                        } catch (Exception e) {
-                            handleMethodNotFound(jarFile, className);
+                            // Write the class name, method names, and line counts to the CSV file
+                            for (Method method : methods) {
+                                writer.writeNext(new String[]{jarFile.getName(), className, method.getName(), String.valueOf(classLines)});
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+                    } catch (ClassNotFoundException e) {
+                        logException(jarFile, className, "ClassNotFoundException");
+                    } catch (NoClassDefFoundError e) {
+                        logException(jarFile, className, "NoClassDefFoundError");
+                    } catch (IllegalAccessError e) {
+                        logException(jarFile, className, "IllegalAccessError");
+                    } catch (IncompatibleClassChangeError e) {
+                        logException(jarFile, className, "IncompatibleClassChangeError");
+                    } catch (Exception e) {
+                        logException(jarFile, className, e.getClass().getSimpleName());
                     }
                 }
             }
@@ -99,27 +98,12 @@ public class JarParser {
         }
     }
 
-    private static void handleClassNotFound(File jarFile, String className) {
+    private static void logException(File jarFile, String className, String exceptionType) {
         try (CSVWriter writer = new CSVWriter(new FileWriter(basePath + File.separator + "output.csv", true))) {
-            writer.writeNext(new String[]{jarFile.getName(), className, "ClassNotFound", "0"});
+            writer.writeNext(new String[]{jarFile.getName(), className, exceptionType, "0"});
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    private static void handleMethodNotFound(File jarFile, String className) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(basePath + File.separator + "output.csv", true))) {
-            writer.writeNext(new String[]{jarFile.getName(), className, "MethodNotFound", "0"});
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private static void handleIncompatibleClassChange(File jarFile, String className) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(basePath + File.separator + "output.csv", true))) {
-            writer.writeNext(new String[]{jarFile.getName(), className, "IncompatibleClassChange", "0"});
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        System.err.println("Exception " + exceptionType + " occurred while processing class: " + className);
     }
 }

@@ -1,4 +1,5 @@
-import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class JenkinsBuildStatus {
                 in.close();
 
                 // Parse the JSON response
-                JSONObject jsonResponse = new JSONObject(response.toString());
+                JSONObject jsonResponse = new JSONObject(Boolean.parseBoolean(response.toString()));
                 System.out.println("jsonResponse : "+jsonResponse);
 
                 // Get the build status

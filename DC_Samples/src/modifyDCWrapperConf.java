@@ -1,8 +1,3 @@
-import com.me.test.test_framework.UemsUri;
-import com.me.test.test_framework.common_testutils.InitialTestConfiguration;
-import com.me.test.test_framework.properties.OnPremisesPath;
-import com.me.test.test_framework.properties.TestProperties;
-import jdk.nashorn.internal.objects.NativeMath;
 
 import java.io.*;
 import java.util.logging.Level;

@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 public class JMeterRawResulttoFormatedResult {
     public static void main(String args[]) throws XMLStreamException, FileNotFoundException {
 
-        SAXXMLParser.customizeXMLReport("E:\\OSD\\raw\\OSD_Zero_Touch_Deployment_152041_JMeter.xml","E:\\OSD\\formated\\OSD_Zero_Touch_Deployment_152041_JMeter.xml","OSD_Zero_Touch_Deployment_152041","");
+        SAXXMLParser.customizeXMLReport("E:\\OSD\\raw\\OSD_Zero_Touch_Deployment_152041_JMeter.xml","E:\\OSD\\formated\\OSD_Zero_Touch_Deployment_152041_JMeter.xml","OSD_Zero_Touch_Deployment_152041", "");
 
     }
 }

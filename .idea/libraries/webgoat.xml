@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="webgoat">
+    <CLASSES>
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/commons-codec-1.7.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/commons-httpclient-3.1.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/commons-io-2.6.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/commons-logging-api.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/hsqldb.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/javacsv-2.0.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/json.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/WebGoatTool.jar!/" />
+      <root url="jar://E:/WebGoat/WebGoatTool/lib/ZohoAnalyticsAPIClient.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

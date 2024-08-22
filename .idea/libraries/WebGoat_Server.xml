@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="WebGoat_Server">
+    <CLASSES>
+      <root url="file://E:/WebGoat/WebGoatTool/WebGoat_Server" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://E:/WebGoat/WebGoatTool/WebGoat_Server" recursive="false" />
+  </library>
+</component>

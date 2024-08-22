@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="JMeter">
+    <CLASSES>
+      <root url="file://E:/Dependency_Jar/JMeter" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://E:/Dependency_Jar/JMeter" recursive="false" />
+  </library>
+</component>

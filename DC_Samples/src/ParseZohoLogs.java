@@ -1,3 +1,4 @@
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVWriter;
@@ -14,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 public class ParseZohoLogs {
 
-    private static final String ACCESS_TOKEN = "Zoho-oauthtoken 1000.06bacca36bc4afdafda14c180b6d0df5.3a801e6215f166973d6332af1eef4289";
+    private static final String ACCESS_TOKEN = "Zoho-oauthtoken 1000.c1896cd0e6a3d30217c8b7f339b64328.6a5a3027b1a0b19b821074a1bfffef22";
     private static final String BASE_URL = "https://logs.localzoho.com/search";
     private static final String APP_ID = "10772528";
     private static final String SERVICE = "ECReleaseMgm";
@@ -22,8 +23,8 @@ public class ParseZohoLogs {
     private static final String CSV_FILE_PATH = "E:\\Zoho Logs\\";
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String fromDateTime = "30/05/2024 18:50:00";
-        String toDateTime = "30/05/2024 18:55:00";
+        String fromDateTime = "11/06/2024 19:05:00";
+        String toDateTime = "11/06/2024 19:10:00";
 //        String applicationLogQuery = "logtype=\"application\" and message contains \"SelectQuery\" or message contains \"WritableDataObject\" or message contains \"exception\" or _zl_size >= \"30000\"";
 //        String getApplicationLogAPI = buildLogAPIUrl(applicationLogQuery, fromDateTime, toDateTime);
 
@@ -36,11 +37,11 @@ public class ParseZohoLogs {
             if(i==0){
                 applicationLogQuery = "logtype=\"application\" and message contains \"SelectQuery\" or message contains \"WritableDataObject\" or message contains \"exception\" or _zl_size >= \"30000\"";
                 getApplicationLogAPI = buildLogAPIUrl(applicationLogQuery, fromDateTime, toDateTime);
-                fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime, "ApplicationLogQueryDetails.csv");
+                fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime, toDateTime+"_ApplicationLogQueryDetails.csv");
             } if(i==1){
                 applicationLogQuery = "logtype=\"application\" and message contains \"iscsignature\" or message contains \"longitude\" or message contains \"enroll?encapiKey=\" or message contains \"authkey=\"";
                 getApplicationLogAPI = buildLogAPIUrl(applicationLogQuery, fromDateTime, toDateTime);
-                fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime, "ApplicationSensitiveLogs.csv");
+                fetchAndWriteApplicationLogs(getApplicationLogAPI, fromDateTime, toDateTime, toDateTime+"_ApplicationSensitiveLogs.csv");
             }
         }
     }

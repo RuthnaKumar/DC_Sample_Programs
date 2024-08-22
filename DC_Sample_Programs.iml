@@ -10,8 +10,16 @@
     <orderEntry type="library" name="webgoat" level="project" />
     <orderEntry type="library" name="WebGoat_Server" level="project" />
     <orderEntry type="library" name="opencsv" level="project" />
-    <orderEntry type="library" name="ant-junit" level="project" />
+    <orderEntry type="library" name="jar_files" level="project" />
+    <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="library" name="JMeter" level="project" />
+    <orderEntry type="library" name="githubJavaParser" level="project" />
     <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="Dependency_Jar" level="project" />
+    <orderEntry type="library" name="lib2" level="project" />
+    <orderEntry type="library" name="DC_Sample_Programs" level="project" />
+    <orderEntry type="library" name="lib3" level="project" />
+    <orderEntry type="library" name="lib4" level="project" />
+    <orderEntry type="library" name="lib5" level="project" />
+    <orderEntry type="library" name="DetectiveAgent" level="project" />
   </component>
 </module>

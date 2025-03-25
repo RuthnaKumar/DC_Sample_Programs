@@ -9,7 +9,7 @@ public class JMeterRawResult {
         String rawResultFilePath = "E:\\test\\JMeterResult\\Configuration_Phase_3.xml";
         String customizedResultFilePath = "E:\\test\\JMeterResult\\Configuration_Phase_3_JMeter.xml";
         String fileName = "JMeterRoleBasedTesting.xml";
-        SAXXMLParser.customizeXMLReport(rawResultFilePath, customizedResultFilePath, fileName, "");
+        SAXXMLParser.customizeXMLReport(rawResultFilePath, customizedResultFilePath, fileName);
 
     }
 }

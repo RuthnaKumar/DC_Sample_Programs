@@ -17,7 +17,8 @@ public class DetectiveReportSummary {
 
     public static void main(String[] args) {
         int pageValue = 3; // Define the number of pages to fetch
-        String apiBaseUrl = "https://detective.localzoho.com/portalapi/uems/qa/results?page={page}&app=&trainer_id=&title=&search_text=&failure_status=&type=active&replay_status=";
+        //String apiBaseUrl = "https://detective.localzoho.com/portalapi/uems/qa/results?page={page}&app=&trainer_id=&title=&search_text=&failure_status=&type=active&replay_status=";
+        String apiBaseUrl = "https://uems-auto-k8s1.csez.zohocorpin.com:31616/portalapi/uems/qa/results?page={page}&app=&trainer_id=&title=&search_text=&failure_status=&type=active&replay_status=";
         String startTime = "March 03, 2025 16:00";
 
         // Define module-wise MO values
@@ -63,7 +64,7 @@ public class DetectiveReportSummary {
                         for (int i = 0; i < testGroups.length(); i++) {
                             JSONObject testGroup = testGroups.getJSONObject(i);
 
-                            if ("active".equalsIgnoreCase(testGroup.getString("org_status"))) {
+                            if ("recorded".equalsIgnoreCase(testGroup.getString("org_status"))) {
                                 int totalCount = testGroup.getInt("total_count") - testGroup.getInt("disabled_count");
                                 int successCount = testGroup.getInt("success_count");
                                 int failureCount = testGroup.getInt("failure_count") +

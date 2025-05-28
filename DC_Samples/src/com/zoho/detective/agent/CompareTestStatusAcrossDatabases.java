@@ -11,13 +11,11 @@ import java.io.IOException;
 
 public class CompareTestStatusAcrossDatabases {
 
-    // Configuration constants
     private static final String PREVIOUS_SCHEMA = "db487db";
-    private static final String CURRENT_SCHEMA = "db485db";
-    private static final String[] EXCLUDED_MODULES = {"MSP", "MDM", "EDR"};
+    private static final String CURRENT_SCHEMA = "db20odb";
+    private static final String[] EXCLUDED_MODULES = {"MDM"};
 
     public static void main(String[] args) {
-        // Database connection details
         DatabaseConfig previousDB = new DatabaseConfig(
                 "jdbc:postgresql://uems-auto-k8s1.csez.zohocorpin.com:31866/sasdb",
                 "root",
@@ -26,38 +24,29 @@ public class CompareTestStatusAcrossDatabases {
         );
 
         DatabaseConfig currentDB = new DatabaseConfig(
-                "jdbc:postgresql://uems-auto-k8s1.csez.zohocorpin.com:31364/sasdb",
-                "root",
-                "posgres",
+                "jdbc:postgresql://10.65.146.22:5432/sasdb",
+                "sasroms",
+                "6XD1oIip44h",
                 CURRENT_SCHEMA
         );
 
-        // Data structures
         Map<String, Map<Long, String>> previousTagDBResults = new HashMap<>();
         Map<String, Map<Long, String>> currentTagDBResults = new HashMap<>();
         Map<String, Map<String, Set<Long>>> combinationWiseTestIds = new HashMap<>();
 
-        // Fetch data
         fetchData(previousDB, previousTagDBResults);
+        System.out.println("Previous");
         fetchData(currentDB, currentTagDBResults);
-
-        // Summarize results
+        System.out.println("Current");
         Map<String, Map<String, Integer>> combinationWiseSummary = summarizeResults(
                 previousTagDBResults,
                 currentTagDBResults,
                 combinationWiseTestIds
         );
 
-        // 1. Print Overall Comparison Summary in descending order
         printOverallSummary(combinationWiseSummary);
-
-        // 2. Print Combination-Module-Count summary to console
         printCombinationModuleCountSummary(combinationWiseSummary);
-
-        // 3. Print Test IDs array grouped by combination
         printCombinationTestIdsArray(combinationWiseTestIds);
-
-        // 4. Save Combination-wise summary with test IDs to CSV
         saveCombinationWiseSummaryToCSV(combinationWiseSummary, combinationWiseTestIds);
     }
 
@@ -121,11 +110,9 @@ public class CompareTestStatusAcrossDatabases {
 
         Map<String, Map<String, Integer>> combinationWiseSummary = new HashMap<>();
 
-        // Define all possible status combinations
         String[] previousStatuses = {"Success", "Failure", "Disable", "NotRun"};
-        String[] currentStatuses = {"Success", "Failure", "Disable", "NotRun"};
+        String[] currentStatuses = {"Success", "Failure", "Disable", "NotRun", "Deleted"};
 
-        // Initialize structures for all combinations
         for (String prevStatus : previousStatuses) {
             for (String currStatus : currentStatuses) {
                 String combination = prevStatus + "-" + currStatus;
@@ -134,7 +121,6 @@ public class CompareTestStatusAcrossDatabases {
             }
         }
 
-        // Process results
         for (Map.Entry<String, Map<Long, String>> moduleEntry : previousTagDBResults.entrySet()) {
             String module = moduleEntry.getKey();
             Map<Long, String> previousResults = moduleEntry.getValue();
@@ -143,13 +129,11 @@ public class CompareTestStatusAcrossDatabases {
             for (Map.Entry<Long, String> entry : previousResults.entrySet()) {
                 long id = entry.getKey();
                 String previousStatus = entry.getValue();
-                String currentStatus = currentResults.getOrDefault(id, "NotRun");
+                String currentStatus = currentResults.getOrDefault(id, "Deleted");
                 String key = previousStatus + "-" + currentStatus;
 
-                // Update count
                 combinationWiseSummary.get(key).merge(module, 1, Integer::sum);
 
-                // Store test ID
                 combinationWiseTestIds.get(key)
                         .computeIfAbsent(module, k -> new HashSet<>())
                         .add(id);
@@ -162,14 +146,12 @@ public class CompareTestStatusAcrossDatabases {
     private static void printOverallSummary(Map<String, Map<String, Integer>> combinationWiseSummary) {
         System.out.println("\nOverall Comparison Summary (Sorted by Count in Descending Order):");
 
-        // Calculate total counts for each combination
         Map<String, Integer> overallCounts = new HashMap<>();
         combinationWiseSummary.forEach((combination, moduleCounts) -> {
             int total = moduleCounts.values().stream().mapToInt(Integer::intValue).sum();
             overallCounts.put(combination, total);
         });
 
-        // Sort and print
         overallCounts.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
@@ -217,7 +199,6 @@ public class CompareTestStatusAcrossDatabases {
                     String combination = combinationEntry.getKey();
                     Map<String, Set<Long>> moduleTestIds = combinationEntry.getValue();
 
-                    // Collect all test IDs across modules for this combination
                     List<Long> allTestIds = moduleTestIds.values().stream()
                             .flatMap(Set::stream)
                             .sorted()
@@ -239,7 +220,6 @@ public class CompareTestStatusAcrossDatabases {
             // Write CSV header
             writer.append("Combination,Total Count,Test IDs (All Modules)\n");
 
-            // Sort combinations by total count in descending order
             combinationWiseSummary.entrySet().stream()
                     .sorted((e1, e2) -> {
                         int total1 = e1.getValue().values().stream().mapToInt(Integer::intValue).sum();
@@ -250,13 +230,10 @@ public class CompareTestStatusAcrossDatabases {
                         String combination = combinationEntry.getKey();
                         int totalCount = combinationEntry.getValue().values().stream().mapToInt(Integer::intValue).sum();
 
-                        // Get all test IDs across all modules for this combination
                         Set<Long> allTestIds = combinationWiseTestIds.getOrDefault(combination, Collections.emptyMap())
                                 .values().stream()
                                 .flatMap(Set::stream)
                                 .collect(Collectors.toSet());
-
-                        // Convert test IDs to sorted array string
                         String testIdsArray = allTestIds.stream()
                                 .sorted()
                                 .map(Object::toString)

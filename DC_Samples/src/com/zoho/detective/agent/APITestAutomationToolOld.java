@@ -32,7 +32,7 @@ public class APITestAutomationToolOld {
         HEADERS.put("Referer", "https://detective.localzoho.com/portal/uems/app");
         HEADERS.put("Content-Type", "application/json");
         HEADERS.put("Connection", "keep-alive");
-        HEADERS.put("Cookie", "detective-username=ruthna.s; zabUserId=1740651575830zabu0.24997422121252222; zabBotScore=100; zalb_bd8611aa93=3d965648accc61668ec2b7561d5b3f6b; zfocscook=95f13227481774c4078334974515410db40e36b020b9bfe65d4e55ec911bf39afcf078c3b158b4288f2c3212050aef17518ed1ffa5556cecfd65d3fb2442f412; _zcsr_tmp=c361851f99d19cfca11b412099352ab6b4e0ebdf5b61e229ff23e652934d95d87431565d012577b0f8edfcbd3c8cf26b5c35240b4b941a79951ac87b953656b3; JSESSIONID=A704A6F7F8548FCB344BE7078A4C6B92; notification_session_id=a614b1647z; DSESSIONID=DSESSIONID87b6be9d801c593138e8643a0ae30d27; _iamadt=79529f9e13b9c1dd997ee8b244ad8424d73b27069e4d1853729b8051b31b90f8eb1ba486d7289fcb3127784909349fea; _iambdt=f9eb598cdb7ed609ca1e2eaf62b304b73757985954711aa13cedfdb13431802f9a479c266eb2e3fa87c7ee6ef2a246b17c8088249ad65f7eed168eecdaf1c37f; wms-tkp-token=70837860-ed62a89f-10b9412d568451558b0e72f032cd034d; danton_method_profiling=true; zsc6868ae0676ff401e8d59414388870027=1748257351911zsc0.8090864020051112; zft-sdc=isef%3Dtrue-isfr%3Dtrue-source%3Ddirect; zps-tgr-dts=sc%3D134-expAppOnNewSession%3D%5B%5D-pc%3D30-sesst%3D1748257351911");
+        HEADERS.put("Cookie", "<cookies>");
         HEADERS.put("Sec-Fetch-Dest", "empty");
         HEADERS.put("Sec-Fetch-Mode", "cors");
         HEADERS.put("Sec-Fetch-Site", "same-origin");
